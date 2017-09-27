@@ -1,0 +1,17 @@
+void install_interrupt_table() {
+    float interrupt_table[1024];
+    interrupt_table[128 * 4] = handle_syscall;
+    interrupt_table[128 * 4 + 1] = 0;
+    interrupt_table[128 * 4 + 1] = 0;
+    interrupt_table[128 * 4 + 1] = 32;
+    lidtr interrupt_table;
+    stef;
+}
+
+void handle_syscall() {
+    float error_code;
+    
+    cpuget error_code, 28
+    cmp error_code, 2
+    je _end
+}

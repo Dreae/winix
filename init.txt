@@ -1,0 +1,25 @@
+#pragma set OutputFinalListing true
+
+main();
+
+#include "drivers/driver_cscr.txt"
+#include "interrupts.txt"
+
+void main() {    
+    cscr_init(1, 65536);
+    cscr_set_color(1, FG_WHITE);
+    
+    cscr_println(1, "Winix v0.01");
+    cscr_println(1, "Installing interrupt table");
+    install_interrupt_table();
+    cscr_println(1, "Entering extended mode");
+    
+    cscr_clear(1);
+    
+    cscr_print(1, "$ ");
+    
+    cscr_set_color(1, 1000999);
+    cscr_print(1, " ");
+}
+
+_end:

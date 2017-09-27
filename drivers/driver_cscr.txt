@@ -1,0 +1,69 @@
+//Console screen registers
+#define CURSOR_RATE        2043
+#define CURSOR_SIZE        2044
+#define CURSOR_POSITION    2045
+#define CURSOR_VISIBLE     2046
+#define LOW_SHIFT_COL      2031
+#define HIGH_SHIFT_COL     2032
+#define LOW_SHIFT_ROW      2033
+#define HIGH_SHIFT_ROW     2034
+#define SHIFT_ROWS         2038
+#define SHIFT_CELLS        2037
+#define CLEAR_SCREEN       2041
+#define BACKGROUND_COLOR   2042
+#define SCREEN_ACTIVE      2047
+#define SCREEN_ROTATION    2024
+#define SCREEN_BRIGHTNESS  2036
+
+#define FG_BLACK    000000
+#define FG_WHITE    000999
+#define FG_RED      000900
+#define FG_GREEN    000090
+#define FG_BLUE     000009
+#define BG_WHITE    999000
+#define BG_RED      900000
+#define BG_GREEN    090000
+#define BG_BLUE     009000
+#define BG_BLACK    000000
+
+#define MAX_SCREENS 16
+
+float mem_offsets[MAX_SCREENS];
+float char_offsets[MAX_SCREENS];
+float colors[MAX_SCREENS];
+
+void cscr_init(float screen, float base_offset) {
+    mem_offsets[screen] = base_offset;
+    char_offsets[screen] = 0;
+    colors[screen] = 000999;
+}
+
+void cscr_set_color(float screen, float colr) {
+    colors[screen] = colr;
+}
+
+void cscr_println(float screen, char* msg) {
+    cscr_print(screen, msg);
+    float cur_col = (char_offsets[screen] / 60);
+    
+    fint cur_col
+    
+    char_offsets[screen] = (cur_col + 1) * 60;
+}
+
+void cscr_print(float screen, char* msg) {
+    float char_offset = 0;
+    while (*msg) {
+        *(mem_offsets[screen] + char_offsets[screen]) = *msg;
+        char_offsets[screen]++;
+        *(mem_offsets[screen] + char_offsets[screen]) = colors[screen];
+        char_offsets[screen]++;
+        msg++;
+    }
+}
+
+
+void cscr_clear(float screen) {
+    *(mem_offsets[screen] + CLEAR_SCREEN) = 1;
+    char_offsets[screen] = 0;
+}
